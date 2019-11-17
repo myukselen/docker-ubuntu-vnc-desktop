@@ -1,4 +1,4 @@
-# Built with arch: {{ arch }} flavor: {{ flavor }} image: {{ image }} localbuild: {{localbuild }}
+# Built with arch: {{ arch }} flavor: {{ flavor }} image: {{ image }} localbuild: {{ localbuild }}
 #
 ################################################################################
 # base system
@@ -13,8 +13,8 @@ FROM arm32v7/{{image}} as system
 COPY --from=amd64 /usr/bin/qemu-arm-static /usr/bin/
 {%endif%}
 
-{% if localbuild == 1 %}
-RUN sed -i 's#http://archive.ubuntu.com/#http://tw.archive.ubuntu.com/#' /etc/apt/sources.list; 
+{% if localbuild %}
+RUN sed -i 's#http://archive.ubuntu.com/#http://{{localbuild}}.archive.ubuntu.com/#' /etc/apt/sources.list; 
 {% endif %}
 
 # built-in packages
@@ -26,19 +26,13 @@ RUN apt update \
         supervisor nginx sudo net-tools zenity xz-utils \
         dbus-x11 x11-utils alsa-utils \
         mesa-utils libgl1-mesa-dri \
-    && apt autoclean -y \
-    && apt autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
-# install debs error if combine together
-RUN add-apt-repository -y ppa:fcwu-tw/apps \
-    && apt update \
-    && apt install -y --no-install-recommends --allow-unauthenticated \
-        xvfb x11vnc=0.9.16-1 \
+        xserver-xorg-video-dummy-hwe-18.04 \
+        x11-vnc \
         {%for package in addon_packages%}{{package}} {%endfor%} \
-    && add-apt-repository -r ppa:fcwu-tw/apps \
     && apt autoclean -y \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
+
 {%if desktop == "lxde" %}
 RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
@@ -63,6 +57,7 @@ RUN apt update \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 {%endif%} 
+
 # Additional packages require ~600MB
 # libreoffice  pinta language-pack-zh-hant language-pack-gnome-zh-hant firefox-locale-zh-hant libreoffice-l10n-zh-tw
 

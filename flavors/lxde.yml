@@ -1,8 +1,8 @@
 ---
 addon_packages:
   - vim-tiny
-  - firefox
-  - chromium-browser
+#  - firefox
+#  - chromium-browser
   - ttf-ubuntu-font-family
   - ttf-wqy-zenhei
 desktop: lxde

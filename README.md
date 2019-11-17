@@ -1,3 +1,12 @@
+This repo is work in progress, please consider the origin as latest.
+
+- localbuild takes country short codes as 'tw' 'tr' 'de', instead of 1
+- remove firefox and chromium to reduce image size
+- Changed xvfb to Xdummy
+- default resolution to 1280x800 right now
+- removed PPA https://launchpad.net/~fcwu-tw/+archive/ubuntu/ppa
+- installing default x11vnc
+
 docker-ubuntu-vnc-desktop
 =========================
 

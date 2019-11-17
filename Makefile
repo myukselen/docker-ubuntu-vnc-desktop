@@ -1,12 +1,12 @@
 .PHONY: build run
 
 # Default values for variables
-REPO  ?= dorowu/ubuntu-desktop-lxde-vnc
+REPO  ?= myukselen/ubuntu-desktop-lxde-vnc
 TAG   ?= latest
 # you can choose other base image versions
 IMAGE ?= ubuntu:18.04
-# use tw.archive.ubuntu.com instead of archive.ubuntu.com
-LOCALBUILD ?= 1
+# to use tw.archive.ubuntu.com instead of archive.ubuntu.com, give tw
+LOCALBUILD ?= tr
 # choose from supported flavors (see available ones in ./flavors/*.yml)
 FLAVOR ?= lxde
 # armhf or amd64
